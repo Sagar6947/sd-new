@@ -135,39 +135,69 @@ class Home extends CI_Controller
         if (!$this->session->has_userdata('login_user_id')) {
             redirect(base_url('login'));
         }
-        if (sessionId('sahar')) {
-            redirect(base_url('dashboard'));
-        }
+        if (!sessionId('sahar')) {
+            //====== add Profile
+            if (count($_POST) > 0) {
 
-        if (count($_POST) > 0) {
+                $post = $this->input->post();
+                $post['company_logo'] = imageUpload('company_logo', 'uploads/company/');
+                $post['company_banner'] = imageUpload('company_banner', 'uploads/company/');
+                $uid = sessionId('login_user_id');
+                $datarow = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
+                if ($datarow != '') {
+                    $insert = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                } else {
+                    $insert = $this->CommonModal->insertRowReturnId('company', $post);
+                }
 
-            $post = $this->input->post();
-            $post['company_logo'] = imageUpload('company_logo', 'uploads/company/');
-            $post['company_banner'] = imageUpload('company_banner', 'uploads/company/');
-            $uid = sessionId('login_user_id');
-            $datarow = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
-            if ($datarow != '') {
-                $insert = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                if ($insert) {
+                    $this->session->set_flashdata('msg', 'Profile Update  successfully');
+                    $this->session->set_flashdata('msg_class', 'alert-success');
+                } else {
+                    $this->session->set_flashdata('msg', 'Profile Update  successfull');
+                    $this->session->set_flashdata('msg_class', 'alert-success');
+                }
+                redirect(base_url() . 'dashboard');
             } else {
-                $insert = $this->CommonModal->insertRowReturnId('company', $post);
-            }
 
-            if ($insert) {
-                $this->session->set_flashdata('msg', 'Profile Update  successfully');
-                $this->session->set_flashdata('msg_class', 'alert-success');
-            } else {
-                $this->session->set_flashdata('msg', 'Profile Update  successfull');
-                $this->session->set_flashdata('msg_class', 'alert-success');
+                $data['title'] = "Complete Your Profile | SaharDirectory - Get a Personal Visiting Card";
+                $data['login_user'] = $this->session->userdata();
+                $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+                $data['category'] = $this->CommonModal->getAllRows('company_category');
+                $data['state_list'] = $this->CommonModal->getAllRows('tbl_state');
+                $this->load->view('my-profile', $data);
             }
-            redirect(base_url() . 'dashboard');
         } else {
+            // ====Update profile=======
+            if (count($_POST) > 0) {
 
-            $data['title'] = "Complete Your Profile | SaharDirectory - Get a Personal Visiting Card";
-            $data['login_user'] = $this->session->userdata();
-            $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
-            $data['category'] = $this->CommonModal->getAllRows('company_category');
-            $data['state_list'] = $this->CommonModal->getAllRows('tbl_state');
-            $this->load->view('my-profile', $data);
+                $post = $this->input->post();
+                $post['company_logo'] = imageUpload('company_logo', 'uploads/company/');
+                $post['company_banner'] = imageUpload('company_banner', 'uploads/company/');
+                $uid = sessionId('login_user_id');
+                $datarow = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
+                if ($datarow != '') {
+                    $insert = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                }
+
+                if ($insert) {
+                    $this->session->set_userdata('msg', '<h6 class="alert alert-success">Profile Updated  successfully</h6>');
+                    $this->session->set_userdata('msg_class', 'alert-success');
+                } else {
+                    $this->session->set_userdata('msg', '<h6 class="alert alert-danger">Profile Not Update</h6>');
+                    $this->session->set_userdata('msg_class', 'alert-success');
+                }
+                redirect(base_url() . 'dashboard');
+            } else {
+                $uid = sessionId('login_user_id');
+                $data['title'] = "My Profile | SaharDirectory - Get a Personal Visiting Card";
+                $data['login_user'] = $this->session->userdata();
+                $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+                $data['datarow'] = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
+                $data['category'] = $this->CommonModal->getAllRows('company_category');
+                $data['state_list'] = $this->CommonModal->getAllRows('tbl_state');
+                $this->load->view('my-profile', $data);
+            }
         }
     }
 

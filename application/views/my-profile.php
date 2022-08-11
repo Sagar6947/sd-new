@@ -29,6 +29,16 @@
 				<div class="row">
 					<div class="col-xl-12 col-lg-2 col-md-12 col-sm-12">
 						<form method="POST" id="myform" enctype="multipart/form-data">
+							<?php
+							if ($this->session->has_userdata('msg')) {
+								echo $this->session->userdata('msg');
+								$this->session->unset_userdata('msg');
+							}
+
+							echo $this->session->has_userdata('msg');
+							echo $this->session->userdata('msg');
+							echo $this->session->unset_userdata('msg');
+							?>
 
 							<input type="hidden" name="rgid" value="<?= sessionId('login_user_id') ?>">
 
@@ -46,13 +56,13 @@
 											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Company Name</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your company name" name="company_name" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your company name" value="<?= $datarow[0]['company_name'] ?>" name="company_name" required />
 												</div>
 											</div>
 											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Company Tagline</label>
-													<input type="text" class="form-control rounded" placeholder="Enter Your company tagline " name="company_tagline" required />
+													<input type="text" class="form-control rounded" placeholder="Enter Your company tagline " name="company_tagline" value="<?= $datarow[0]['company_tagline'] ?>" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -64,7 +74,7 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Your Designation</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your destignation" name="company_designation" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your destignation" name="company_designation" value="<?= $datarow[0]['company_designation'] ?>" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -82,13 +92,13 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Whatsapp</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your whatsapp number" name="company_whatsapp" maxlength="10" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your whatsapp number" name="company_whatsapp" value="<?= $datarow[0]['company_whatsapp'] ?>" maxlength="10" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Website (Optional)</label>
-													<input type="text" class="form-control rounded" placeholder="Your website link" name="company_website_url" />
+													<input type="text" class="form-control rounded" placeholder="Your website link" value="<?= $datarow[0]['company_website_url'] ?>" name="company_website_url" />
 												</div>
 											</div>
 										</div>
@@ -108,19 +118,41 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Category</label>
-													<select class="form-control" name="company_category" id="company_category" required>
-														<option>Select Category</option>
-														<?php
-														if (!empty($category)) {
-															foreach ($category as $cat_row) {
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<select class="form-control" name="company_category" id="company_category" required>
+															<option>Select Category</option>
+															<?php
+															if (!empty($category)) {
+																foreach ($category as $cat_row) {
 
-														?>
-																<option value="<?= $cat_row['cate_id'] ?>"><?= $cat_row['category'] ?></option>
-														<?php
+															?>
+																	<option value="<?= $cat_row['cate_id'] ?>"><?= $cat_row['category'] ?></option>
+															<?php
+																}
 															}
-														}
-														?>
-													</select>
+															?>
+														</select>
+													<?php
+													} else {
+													?>
+														<select class="form-control" name="company_category" id="company_category" required>
+															<option>Select Category</option>
+															<?php
+															if (!empty($category)) {
+																foreach ($category as $cat_row) {
+
+															?>
+																	<option value="<?= $cat_row['cate_id'] ?>" <?= ($datarow[0]['company_category'] == $cat_row['cate_id']) ? "selected" : "" ?>><?= $cat_row['category'] ?></option>
+															<?php
+																}
+															}
+															?>
+														</select>
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -152,13 +184,15 @@
 											<div class="col-lg-6 col-md-6">
 												<div class="form-group">
 													<label for="formFileLg" class="form-label">Upload Company Logo</label>
-													<input class="form-control rounded" type="file" name="company_logo" required>
+													<input class="form-control rounded" type="file" name="company_logo" value="<?= $datarow[0]['company_logo'] ?>" required>
+													<img src="<?= base_url() ?>uploads/company/<?= $datarow[0]['company_logo'] ?>" class="logo-preview" alt="company-logo">
 												</div>
 											</div>
 											<div class="col-lg-6 col-md-6">
 												<div class="form-group">
 													<label for="formFileLg" class="form-label">Upload Company Banner</label>
-													<input class="form-control rounded" type="file" name="company_banner" required>
+													<input class="form-control rounded" type="file" name="company_banner" value="<?= $datarow[0]['company_logo'] ?>" required>
+													<img src="<?= base_url() ?>uploads/company/<?= $datarow[0]['company_banner'] ?>" class="logo-preview" alt="company-logo">
 												</div>
 											</div>
 
@@ -179,18 +213,39 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">State</label>
-													<select class="form-control" name="company_state" id="state" required>
-														<option>Select State</option>
-														<?php
-														if (!empty($state_list)) {
-															foreach ($state_list as $state_row) {
-														?>
-																<option value="<?= $state_row['state_id'] ?>"><?= $state_row['state_name'] ?></option>
-														<?php
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<select class="form-control" name="company_state" id="state" required>
+															<option>Select State</option>
+															<?php
+															if (!empty($state_list)) {
+																foreach ($state_list as $state_row) {
+															?>
+																	<option value="<?= $state_row['state_id'] ?>"><?= $state_row['state_name'] ?></option>
+															<?php
+																}
 															}
-														}
-														?>
-													</select>
+															?>
+														</select>
+													<?php
+													} else {
+													?>
+														<select class="form-control" name="company_state" id="state" required>
+															<option>Select State</option>
+															<?php
+															if (!empty($state_list)) {
+																foreach ($state_list as $state_row) {
+															?>
+																	<option value="<?= $state_row['state_id'] ?>" <?= ($datarow[0]['company_state'] == $state_row['state_id']) ? "selected" : "" ?>><?= $state_row['state_name'] ?></option>
+															<?php
+																}
+															}
+															?>
+														</select>
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -204,13 +259,13 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Address</label>
-													<input type="text" class="form-control rounded" placeholder="Enter Your address here" name="company_address" required />
+													<input type="text" class="form-control rounded" placeholder="Enter Your address here" value="<?= $datarow[0]['company_address'] ?>" name="company_address" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Pin Code</label>
-													<input type="text" class="form-control rounded" placeholder="Pin code" name="pin_code" required />
+													<input type="text" class="form-control rounded" placeholder="Pin code" value="<?= $datarow[0]['pin_code'] ?>" name="pin_code" required />
 												</div>
 											</div>
 
@@ -233,37 +288,97 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1"><i class="ti-facebook theme-cl me-1"></i>Facebook</label>
-													<input type="text" class="form-control rounded" placeholder="https://www.facebook.com/sahardirectory/" value="https://www.facebook.com/sahardirectory/" name="company_facebook" />
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://www.facebook.com/sahardirectory/" value="https://www.facebook.com/sahardirectory/" name="company_facebook" />
+													<?php
+													} else {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://www.facebook.com/sahardirectory/" value="<?= $datarow[0]['company_facebook'] ?>" name="company_facebook" />
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1"><i class="ti-twitter theme-cl me-1"></i>Twitter</label>
-													<input type="text" class="form-control rounded" placeholder="" value="https://twitter.com/SaharDirectory/" name="company_twitter" />
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://twitter.com/SaharDirectory/" value="https://twitter.com/SaharDirectory/" name="company_twitter" />
+													<?php
+													} else {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://twitter.com/SaharDirectory/" value="<?= $datarow[0]['company_twitter'] ?>" name="company_twitter" />
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1"><i class="ti-instagram theme-cl me-1"></i>Instagram</label>
-													<input type="text" class="form-control rounded" placeholder="" value="https://instagram.com/" name="company_instagram" />
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://instagram.com/" value="https://instagram.com/" name="company_instagram" />
+													<?php
+													} else {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://instagram.com/" value="<?= $datarow[0]['company_instagram'] ?>" name="company_instagram" />
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1"><i class="ti-linkedin theme-cl me-1"></i>Linkedin</label>
-													<input type="text" class="form-control rounded" placeholder="" value="https://linkedin.com/" name="company_linkedin" />
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://linkedin.com/" value="https://linkedin.com/" name="company_linkedin" />
+													<?php
+													} else {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://linkedin.com/" value="<?= $datarow[0]['company_linkedin'] ?>" name="company_linkedin" />
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1"><i class="ti-youtube theme-cl me-1"></i>Youtube</label>
-													<input type="text" class="form-control rounded" placeholder="" value="https://www.youtube.com/SaharDirectory" name="company_youtube" />
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://www.youtube.com/SaharDirectory" value="https://www.youtube.com/SaharDirectory" name="company_youtube" />
+													<?php
+													} else {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://www.youtube.com/SaharDirectory" value="<?= $datarow[0]['company_youtube'] ?>" name="company_youtube" />
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1"><i class="icofont-telegram theme-cl me-1"></i>Telegram</label>
-													<input type="text" class="form-control rounded" placeholder="" value="https://www.telegram.com/sahardirectory" name="company_telegram" />
+													<?php
+													if (!sessionId('sahar')) {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://www.telegram.com/sahardirectory" value="https://www.telegram.com/sahardirectory" name="company_telegram" />
+													<?php
+													} else {
+													?>
+														<input type="text" class="form-control rounded" placeholder="https://www.telegram.com/sahardirectory" value="<?= $datarow[0]['company_telegram'] ?>" name="company_telegram" />
+													<?php
+													}
+													?>
 												</div>
 											</div>
 											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">

@@ -9843,3 +9843,7 @@ footer.skin-dark-footer ul.footer-bottom-social li a:focus {
 .d-none{
     display: none !important;
 }
+
+.logo-preview{
+    width: 100px !important;
+}
