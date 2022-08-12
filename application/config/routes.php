@@ -13,6 +13,7 @@ $route['signup'] = "Home/register";
 $route['my-profile'] = "Home/my_profile";
 $route['choose-vcard'] = "Home/choose_vcard";
 $route['dashboard'] = "Home/dashboard";
+$route['getvalue'] = "Home/getvalue";
 $route['logout'] = 'Home/logout';
 $route['search_contact'] = "Home/searchcontact";
 

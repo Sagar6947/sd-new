@@ -146,8 +146,12 @@ class Home extends CI_Controller
                 $datarow = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
                 if ($datarow != '') {
                     $insert = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                    echo 'updated';
+                    redirect(base_url('choose-vcard'));
                 } else {
                     $insert = $this->CommonModal->insertRowReturnId('company', $post);
+                    redirect(base_url('choose-vcard'));
+                    echo 'inserted';
                 }
 
                 if ($insert) {
@@ -157,6 +161,8 @@ class Home extends CI_Controller
                     $this->session->set_flashdata('msg', 'Profile Update  successfull');
                     $this->session->set_flashdata('msg_class', 'alert-success');
                 }
+                echo 'final';
+                // exit();
                 redirect(base_url() . 'dashboard');
             } else {
 
@@ -203,6 +209,12 @@ class Home extends CI_Controller
         }
     }
 
+    public function getvalue()
+    {
+        $url = $this->input->post('nm');
+        $data['web_url'] = $this->CommonModal->runQuery("SELECT * FROM `company` WHERE `company_web_title` IN ('" . $url . "')");
+        $this->load->view('getvalue', $data);
+    }
     public function getcity()
     {
         $state = $this->input->post('state');
@@ -233,6 +245,9 @@ class Home extends CI_Controller
         if (!sessionId('sahar')) {
             redirect(base_url('my-profile'));
         }
+        if (!sessionId('web')) {
+            redirect(base_url('choose-vcard'));
+        }
 
         $data['title'] = "Dashboard | SaharDirectory - Get a Personal Visiting Card";
         $data['login_user'] = $this->session->userdata();
@@ -244,10 +259,18 @@ class Home extends CI_Controller
         if (!$this->session->has_userdata('login_user_id')) {
             redirect(base_url('login'));
         }
-        if (!sessionId('sahar')) {
-            redirect(base_url('my-profile'));
+        if (count($_POST) > 0) {
+            $post = $this->input->post();
+            $uid = sessionId('login_user_id');
+            $gettbl = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
+            if ($gettbl['company_web_title'] == '' || $gettbl['vcard_style'] == '') {
+                $add = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                redirect(base_url('dashboard'));
+            } else {
+                $add = $this->CommonModal->insertRowReturnId('company', $post);
+                redirect(base_url('dashboard'));
+            }
         }
-
         $data['title'] = "Select Vcard | SaharDirectory - Get a Personal Visiting Card";
         $this->load->view('choose-vcard', $data);
     }
