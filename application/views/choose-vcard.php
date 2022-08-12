@@ -70,7 +70,7 @@
             <div class="dashboard-tlbar d-block mb-5">
                 <div class="row">
                     <div class="colxl-12 col-lg-12 col-md-12">
-                        <h1 class="ft-medium"><?= sessionId('sahar') ? "Choose Vcard Theme" : "Choose Vcard/Website"; ?></h1>
+                        <h1 class="ft-medium"><?= sessionId('web') ? "Choose Vcard Theme" : "Choose Vcard/Website"; ?></h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item text-muted"><a href="#">Home</a></li>
@@ -91,41 +91,45 @@
                                 echo $this->session->userdata('msg');
                                 $this->session->unset_userdata('msg');
                             }
-
-                            echo $this->session->has_userdata('msg');
-                            echo $this->session->userdata('msg');
-                            echo $this->session->unset_userdata('msg');
                             ?>
 
                             <div class="submit-form">
                                 <!-- Listing Info -->
-                                <div class="dashboard-list-wraps bg-white rounded mb-4">
-                                    <div class="dashboard-list-wraps-head br-bottom py-3 px-3">
-                                        <div class="dashboard-list-wraps-flx">
-                                            <h4 class="mb-0 ft-medium fs-md"><i class="fa fa-file me-2 theme-cl fs-sm"></i>Vcard Details</h4>
+                                <?php
+                                if (!sessionId('web')) {
+                                ?>
+                                    <div class="dashboard-list-wraps bg-white rounded mb-4">
+                                        <div class="dashboard-list-wraps-head br-bottom py-3 px-3">
+                                            <div class="dashboard-list-wraps-flx">
+                                                <h4 class="mb-0 ft-medium fs-md"><i class="fa fa-file me-2 theme-cl fs-sm"></i>Vcard Details</h4>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="dashboard-list-wraps-body py-3 px-3">
-                                        <div class="row">
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="mb-1">Your Vcard/website URL
-                                                        <i><span style="color:red;font-size:12px;" id="web_company_name_msg"></span><span style="color:green;font-size:12px;" id="web_company_name_msgs"></span></i>
-                                                    </label>
-                                                    <input type="text" class="form-control rounded" placeholder="Enter your Vcard/website URL" name="company_web_title" id="company_web_title" required />
-                                                    <label class="mt-2"><span style="color: red;">Note:</span> It won’t be changeable so please choose carefully.</label>
+                                        <div class="dashboard-list-wraps-body py-3 px-3">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Your Vcard/website URL
+                                                            <i><span style="color:red;font-size:12px;" id="web_company_name_msg"></span><span style="color:green;font-size:12px;" id="web_company_name_msgs"></span></i>
+                                                        </label>
+                                                        <input type="text" class="form-control rounded" placeholder="Enter your Vcard/website URL" name="company_web_title" id="company_web_title" required />
+                                                        <label class="mt-2"><span style="color: red;">Note:</span> It won’t be changeable so please choose carefully.</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php
+                                }
+                                ?>
 
                                 <!-- Select theme -->
                                 <div class="dashboard-list-wraps bg-white rounded mb-4">
                                     <div class="dashboard-list-wraps-head br-bottom py-3 px-3">
                                         <div class="dashboard-list-wraps-flx">
                                             <h4 class="mb-0 ft-medium fs-md"><i class="lni lni-postcard me-2 theme-cl fs-sm"></i>Select theme</h4>
+                                          
+                                            
                                         </div>
                                     </div>
 
@@ -134,21 +138,21 @@
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                                 <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 1</span>
-                                                    <input type="radio" name="vcard_style" value="1" id="myCheckbox1" />
+                                                    <input type="radio" name="vcard_style" value="1" id="myCheckbox1" <?= (($selectstyle[0]['vcard_style'] == '1') ? 'checked' : '' )?> />
                                                     <label for="myCheckbox1" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-1.jpg" /></label>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                                 <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 2</span>
-                                                    <input type="radio" name="vcard_style" value="2" id="myCheckbox2" />
+                                                    <input type="radio" name="vcard_style" value="2" id="myCheckbox2" <?= (($selectstyle[0]['vcard_style'] == '2') ? 'checked': '') ?> />
                                                     <label for="myCheckbox2" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-2.jpg" /></label>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                                 <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 3</span>
-                                                    <input type="radio" name="vcard_style" value="3" id="myCheckbox3" />
+                                                    <input type="radio" name="vcard_style" value="3" id="myCheckbox3" <?= (($selectstyle[0]['vcard_style'] == '3') ? 'checked' : '') ?>/>
                                                     <label for="myCheckbox3" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-3.jpg" /></label>
                                                 </div>
                                             </div>

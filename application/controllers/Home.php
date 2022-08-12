@@ -259,18 +259,34 @@ class Home extends CI_Controller
         if (!$this->session->has_userdata('login_user_id')) {
             redirect(base_url('login'));
         }
-        if (count($_POST) > 0) {
-            $post = $this->input->post();
-            $uid = sessionId('login_user_id');
-            $gettbl = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
-            if ($gettbl['company_web_title'] == '' || $gettbl['vcard_style'] == '') {
-                $add = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
-                redirect(base_url('dashboard'));
-            } else {
-                $add = $this->CommonModal->insertRowReturnId('company', $post);
-                redirect(base_url('dashboard'));
+        if (!sessionId('web')) {
+            if (count($_POST) > 0) {
+                $post = $this->input->post();
+                $uid = sessionId('login_user_id');
+                $gettbl = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
+                if ($gettbl['company_web_title'] == '' || $gettbl['vcard_style'] == '') {
+                    $add = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                    redirect(base_url('dashboard'));
+                } else {
+                    $add = $this->CommonModal->insertRowReturnId('company', $post);
+                    redirect(base_url('dashboard'));
+                }
+            }
+        } else {
+            if (count($_POST) > 0) {
+                $post = $this->input->post();
+                $uid = sessionId('login_user_id');
+                $gettbl = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
+                if ($gettbl['vcard_style'] == '') {
+                    $add = $this->CommonModal->updateRowById('company', 'rgid', $uid, $post);
+                    $this->session->set_userdata('msg', '<h6 class="alert alert-success bg-inverse">Your Vcard theme updated successfully.</h6>');
+                    redirect(base_url('choose-vcard'));
+                    $add = $this->CommonModal->insertRowReturnId('company', $post);
+                    redirect(base_url('dashboard'));
+                }
             }
         }
+        $data['selectstyle'] = $this->CommonModal->runQuery("SELECT vcard_style FROM company WHERE rgid = '" . sessionId('login_user_id') . "' ");
         $data['title'] = "Select Vcard | SaharDirectory - Get a Personal Visiting Card";
         $this->load->view('choose-vcard', $data);
     }
