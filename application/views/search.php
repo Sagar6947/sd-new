@@ -28,7 +28,7 @@
                     <!-- row -->
                     <div class="row">
                         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                           <?php include 'filter.php'; ?>
+                            <?php include 'filter.php'; ?>
                             <!-- Sidebar End -->
 
                         </div>
@@ -93,17 +93,11 @@
                         </div>
                     </div>
             <?php
-
                 } else {
-                    echo '<h2 class="ft-bold text-center"> ☹️ Sorry!.. No Result Found</h2>';
+                    echo '<h2 class="ft-bold text-center"> ☹️ Sorry, we couldn"t find any Result</h2>';
                 }
             }
-
             ?>
-
-
-
-
         </div>
     </section>
 

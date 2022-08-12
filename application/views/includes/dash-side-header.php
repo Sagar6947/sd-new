@@ -6,15 +6,15 @@
         <div class="goodup-dashboard-nav sticky-top">
 
             <?php
-            $get_pro = runQuery("SELECT company_name FROM company WHERE rgid = '" . sessionId('login_user_id') . "' ");
+            $get_pro = runQuery("SELECT company_name, company_web_title FROM company WHERE rgid = '" . sessionId('login_user_id') . "' ");
             foreach ($get_pro as $sss) {
-                $this->session->set_userdata(array('sahar' => $sss['company_name']));
+                $this->session->set_userdata(array('sahar' => $sss['company_name'], 'web' => $sss['company_web_title']));
             }
             ?>
 
-            <div class="goodup-dashboard-inner dash-nav <?= sessionId('sahar') ? "" : "disable"; ?>">
+            <div class="goodup-dashboard-inner dash-nav <?= sessionId('sahar') && sessionId('web') ? "" : "disable"; ?>">
                 <?php
-                if (!sessionId('sahar')) {
+                if (!sessionId('sahar') || !sessionId('web')) {
                 ?>
                     <div class="disable-msg">
                         <i class="lni lni-lock-alt"></i>

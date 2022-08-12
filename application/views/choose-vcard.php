@@ -70,7 +70,7 @@
             <div class="dashboard-tlbar d-block mb-5">
                 <div class="row">
                     <div class="colxl-12 col-lg-12 col-md-12">
-                        <h1 class="ft-medium"><?= sessionId('sahar') ? "Choose Vcard Theme" : "Choose Vcard/Website"; ?></h1>
+                        <h1 class="ft-medium"><?= sessionId('web') ? "Choose Vcard Theme" : "Choose Vcard/Website"; ?></h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item text-muted"><a href="#">Home</a></li>
@@ -91,66 +91,76 @@
                                 echo $this->session->userdata('msg');
                                 $this->session->unset_userdata('msg');
                             }
-
-                            echo $this->session->has_userdata('msg');
-                            echo $this->session->userdata('msg');
-                            echo $this->session->unset_userdata('msg');
                             ?>
 
                             <div class="submit-form">
                                 <!-- Listing Info -->
-                                <div class="dashboard-list-wraps bg-white rounded mb-4">
-                                    <div class="dashboard-list-wraps-head br-bottom py-3 px-3">
-                                        <div class="dashboard-list-wraps-flx">
-                                            <h4 class="mb-0 ft-medium fs-md"><i class="fa fa-file me-2 theme-cl fs-sm"></i>Vcard Details</h4>
+                                <?php
+                                if (!sessionId('web')) {
+                                ?>
+                                    <div class="dashboard-list-wraps bg-white rounded mb-4">
+                                        <div class="dashboard-list-wraps-head br-bottom py-3 px-3">
+                                            <div class="dashboard-list-wraps-flx">
+                                                <h4 class="mb-0 ft-medium fs-md"><i class="fa fa-file me-2 theme-cl fs-sm"></i>Vcard Details</h4>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="dashboard-list-wraps-body py-3 px-3">
-                                        <div class="row">
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="mb-1">Your Vcard/website URL</label>
-                                                    <input type="text" class="form-control rounded" placeholder="Enter your Vcard/website URL" name="company_name" required />
-                                                    <label class="mt-2"><span style="color: red;">Note:</span> It won’t be changeable so please choose carefully.</label>
+                                        <div class="dashboard-list-wraps-body py-3 px-3">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Your Vcard/website URL
+                                                            <i><span style="color:red;font-size:12px;" id="web_company_name_msg"></span><span style="color:green;font-size:12px;" id="web_company_name_msgs"></span></i>
+                                                        </label>
+                                                        <input type="text" class="form-control rounded" placeholder="Enter your Vcard/website URL" name="company_web_title" id="company_web_title" required />
+                                                        <label class="mt-2"><span style="color: red;">Note:</span> It won’t be changeable so please choose carefully.</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php
+                                }
+                                ?>
 
-                                <!-- Location Info -->
+                                <!-- Select theme -->
                                 <div class="dashboard-list-wraps bg-white rounded mb-4">
                                     <div class="dashboard-list-wraps-head br-bottom py-3 px-3">
                                         <div class="dashboard-list-wraps-flx">
                                             <h4 class="mb-0 ft-medium fs-md"><i class="lni lni-postcard me-2 theme-cl fs-sm"></i>Select theme</h4>
+                                          
+                                            
                                         </div>
                                     </div>
 
-                                    <div class="dashboard-list-wraps-body py-3 px-3">
+                                    <div class="dashboard-list-wraps-body py-3 px-3 br-bottom">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                                 <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 1</span>
-                                                    <input type="radio" name="vcard" value="1" id="myCheckbox1" />
+                                                    <input type="radio" name="vcard_style" value="1" id="myCheckbox1" <?= (($selectstyle[0]['vcard_style'] == '1') ? 'checked' : '' )?> />
                                                     <label for="myCheckbox1" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-1.jpg" /></label>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                                 <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 2</span>
-                                                    <input type="radio" name="vcard" value="2" id="myCheckbox2" />
+                                                    <input type="radio" name="vcard_style" value="2" id="myCheckbox2" <?= (($selectstyle[0]['vcard_style'] == '2') ? 'checked': '') ?> />
                                                     <label for="myCheckbox2" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-2.jpg" /></label>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                                 <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 3</span>
-                                                    <input type="radio" name="vcard" value="3" id="myCheckbox3" />
+                                                    <input type="radio" name="vcard_style" value="3" id="myCheckbox3" <?= (($selectstyle[0]['vcard_style'] == '3') ? 'checked' : '') ?>/>
                                                     <label for="myCheckbox3" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-3.jpg" /></label>
                                                 </div>
                                             </div>
-
+                                        </div>
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 br-top pt-2">
+                                            <div class="form-group">
+                                                <button type="submit" id="check" class="btn theme-bg rounded text-light"><?= sessionId('sahar') && sessionId('web') ? "Update" : "Submit"; ?></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -178,32 +188,55 @@
     <?php include 'includes/footer-bottom.php' ?>
 
 </div>
-<!-- All Jquery -->
-
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/popper.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/slick.js"></script>
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script src="assets/js/dropzone.js"></script>
-<script src="assets/js/counterup.js"></script>
-<script src="assets/js/lightbox.js"></script>
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/daterangepicker.js"></script>
-<script src="assets/js/lightbox.js"></script>
-<script src="assets/js/jQuery.style.switcher.js"></script>
-<script src="assets/js/custom.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- Date Booking Script -->
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/daterangepicker.js"></script>
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-
+<?php include 'includes/footer-link.php' ?>
 <script>
+    var err = [];
+    $('.form-control').keyup(function() {
+        runval();
+    });
+    $('#check').click(function() {
+        runval();
+    });
+
+    function runval() {
+        err = [];
+        if (!$('#company_web_title').val()) {
+            err.push('true');
+            $('#web_company_name_msg').text('Company web name is required');
+        } else {
+            var str = $('#company_web_title').val();
+            // str = str.replace('--', '-');
+            str = str.replace(/\W$/, '-');
+            $('#company_web_title').val(str);
+
+            $('#web_company_name_msg').text('');
+            $.ajax({
+                url: "<?= base_url('home/getvalue') ?>",
+                method: "POST",
+                data: {
+                    nm: str
+                },
+                success: function(data) {
+                    console.log(data)
+                    if (data == 'Y') {
+                        $('#web_company_name_msgs').text('Username is Available');
+                        $('#web_company_name_msg').text('');
+                    } else {
+                        err.push('true');
+                        $('#web_company_name_msg').text('Username Not Available');
+                        $('#web_company_name_msgs').text('');
+                    }
+
+                }
+            });
+
+        }
+    }
+
+    // $(document).on('', '#company_web_title', function() {
+
+    // });
+
     $(document).on('change', '#state', function() {
         var state = $(this).val();
         $.ajax({
@@ -274,4 +307,3 @@
         }
     };
 </script>
-<?php include 'includes/footer-link.php' ?>
