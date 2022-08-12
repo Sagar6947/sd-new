@@ -40,14 +40,13 @@
                     <div id="business-toggle" class="fas fa-plus"></div>
                 </div>
                 <ul data-submenu-title="My Business" class="business">
-                    <li><a href="dashboard-my-listings.php"><i class="lni lni-files me-2"></i>My Prodcut</a></li>
-                    <li><a href="dashboard-add-product.php"><i class="lni lni-add-files me-2"></i>Add Product</a></li>
-                    <li><a href=""><i class="lni lni-pencil-alt me-2"></i>Product Edit </a></li>
+                    <li><a href="<?= base_url('product-list') ?>"><i class="lni lni-files me-2"></i>My Prodcut</a></li>
+                    
                     <li><a href=""><i class="lni lni-alarm-clock me-2"></i>Workin Hours</a></li>
                     <li><a href=""><i class="lni lni-coffee-cup me-2"></i>Amenties Options</a></li>
                     <li><a href=""><i class="lni lni-information me-2"></i>About Us</a></li>
-                    <li><a href="my-enquiry.php"><i class="lni lni-list me-2"></i>Enquiry</a></li>
-                    <li><a href=""><i class="lni lni-star me-2"></i>Reviews</a></li>
+                    <li><a href="<?= base_url('enquiry') ?>"><i class="lni lni-list me-2"></i>Enquiry</a></li>
+                    <li><a href="<?= base_url('reviews') ?>"><i class="lni lni-star me-2"></i>Reviews</a></li>
                 </ul>
                 <div class="nav-head d-flex justify-content-between align-items-center border-top"><span>Banners</span>
                     <div id="banner-toggle" class="fas fa-plus"></div>
@@ -62,8 +61,8 @@
                 </div>
                 <ul data-submenu-title="My Accounts" class="account">
                     <li><a href="<?= base_url('my-profile') ?>"><i class="lni lni-user me-2"></i>My Profile </a></li>
-                    <li><a href=""><i class="lni lni-lock-alt me-2"></i>Change Password</a></li>
-                    <li><a href="logout.php"><i class="lni lni-power-switch me-2"></i>Log Out</a></li>
+                    <li><a href="<?= base_url('changePassword') ?>"><i class="lni lni-lock-alt me-2"></i>Change Password</a></li>
+                    <li><a href="<?= base_url('logout') ?>"><i class="lni lni-power-switch me-2"></i>Log Out</a></li>
                 </ul>
             </div>
         </div>

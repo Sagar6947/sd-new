@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 // $config['base_url'] = 'https://webangeltech.com/sahardirectory/';
-$config['base_url'] = 'http://localhost/sd2/';
+$config['base_url'] = 'http://localhost/sahar/';
 
 
 
@@ -30,8 +30,7 @@ $config['subclass_prefix'] = 'MY_';
 
 $config['composer_autoload'] = FALSE;
 
-
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-@\=';
 
 
 $config['enable_query_strings'] = FALSE;
@@ -67,7 +66,7 @@ $config['cache_path'] = '';
 $config['cache_query_string'] = FALSE;
 
 
-$config['encryption_key'] = '';
+$config['encryption_key'] = '123456789asdfghjklpoiuytrewq987456321zxcvbnm';
 
 
 $config['sess_driver'] = 'files';

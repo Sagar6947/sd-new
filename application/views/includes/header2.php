@@ -2,8 +2,8 @@
 	<div class="container">
 		<nav id="navigation" class="navigation navigation-landscape">
 			<div class="nav-header">
-				<a class="nav-brand" href="./index.php">
-					<img src="assets/images/logo-white.png" class="logo" alt="" />
+				<a class="nav-brand" href="<?= base_url() ?>">
+					<img src="<?= base_url() ?>assets/images/logo-white.png" class="logo" alt="" />
 				</a>
 				<div class="nav-toggle"></div>
 				<div class="mobile_nav">

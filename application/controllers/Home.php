@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Home extends CI_Controller
 {
 
-    public function index()
+   public function index()
     {
         $data['title'] = "Home |  SaharDirectory - Get a Personal Visiting Card";
 
@@ -215,6 +215,103 @@ class Home extends CI_Controller
         $data['web_url'] = $this->CommonModal->runQuery("SELECT * FROM `company` WHERE `company_web_title` IN ('" . $url . "')");
         $this->load->view('getvalue', $data);
     }
+    
+
+    public function product_list()
+    {
+        $data['title'] = "Product Add | SaharDirectory - Get a Personal Visiting Card";
+        $data['login_user'] = $this->session->userdata();
+        $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+        $data['productdata'] = $this->CommonModal->getRowById('product', 'company_id', $this->session->userdata('login_user_id'));
+
+        $BdID = $this->input->get('BdID');
+
+        if ($BdID != '') {
+            $data = $this->CommonModal->getRowById('product', 'product_id', $BdID);
+
+
+            unlink('uploads/product/' .  $data[0]['product_image']);
+
+            $delete = $this->CommonModal->deleteRowById('product', array('product_id' => $BdID));
+            if ($delete) {
+                $this->session->set_flashdata('msg', 'Product Delete Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Somethig Went Wrong try again later');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
+            }
+            redirect(base_url('product-list'));
+            exit;
+        }
+        $this->load->view('product-list', $data);
+    }
+
+
+    public function product_add()
+    {
+        $data['title'] = "Product Add | SaharDirectory - Get a Personal Visiting Card";
+        $data['login_user'] = $this->session->userdata();
+        $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+        $data['subcate'] = $this->CommonModal->getAllRows('company_subcategory');
+
+        $data['tag'] = 'Add';
+        if (count($_POST) > 0) {
+            $post = $this->input->post();
+            $post['company_id'] = sessionId('login_user_id');
+            $post['product_image'] = imageUpload('product_image', 'uploads/product/');
+
+            $insert = $this->CommonModal->insertRowReturnId('product', $post);
+            if ($insert) {
+                $this->session->set_flashdata('msg', 'Product Uploaded Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Somethig Went Wrong try again later');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
+            }
+            redirect(base_url('product-list'));
+        } else {
+            $this->load->view('product-add', $data);
+        }
+    }
+
+
+    public function update_product($pid)
+    {
+        $data['title'] = "Product Edit | SaharDirectory - Get a Personal Visiting Card";
+        $data['login_user'] = $this->session->userdata();
+        $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+        $data['subcate'] = $this->CommonModal->getAllRows('company_subcategory');
+
+        $get_id = decryptId($pid);
+        $data['tag'] = 'Edit';
+        $data['product_list'] = $this->CommonModal->getRowById('product', 'product_id', $get_id);
+
+        if (count($_POST) > 0) {
+            $post = $this->input->post();
+            $product_image = $post['product_image'];
+            if ($_FILES['product_image_temp']['name'] != '') {
+                $img = imageUpload('product_image_temp', 'uploads/merchant/');
+                $post['product_image'] = $img;
+                if ($product_image != "") {
+                    unlink('uploads/product/' . $product_image);
+                }
+            }
+            $update = $this->CommonModal->updateRowById('product', 'product_id', $get_id, $post);
+            if ($update) {
+                $this->session->set_flashdata('msg', 'Product Uploaded Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Product Uploaded Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            }
+            redirect(base_url('product-list'));
+        } else {
+            $this->load->view('product-add', $data);
+        }
+    }
+
+
+
     public function getcity()
     {
         $state = $this->input->post('state');
@@ -252,6 +349,7 @@ class Home extends CI_Controller
         $data['title'] = "Dashboard | SaharDirectory - Get a Personal Visiting Card";
         $data['login_user'] = $this->session->userdata();
         $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+        $data['enquiry'] = $this->CommonModal->getRowByIdInOrder('inquiry', array('company_id' => sessionId('login_user_id')), 'id', 'DESC');
         $this->load->view('dashboard', $data);
     }
     public function choose_vcard()
@@ -290,6 +388,115 @@ class Home extends CI_Controller
         $data['title'] = "Select Vcard | SaharDirectory - Get a Personal Visiting Card";
         $this->load->view('choose-vcard', $data);
     }
+
+    public function changePassword()
+    {
+        if (!$this->session->has_userdata('login_user_id')) {
+            redirect(base_url('login'));
+        }
+
+        if (count($_POST) > 0) {
+
+
+            $oldpassword = $this->input->post('oldpassword');
+            $password = $this->input->post('password');
+            $confirmpassword = $this->input->post('confirmpassword');
+
+
+            $profile = $this->CommonModal->getsingleRowById('tbl_registration', array('rgid' => $this->session->userdata('login_user_id')));
+
+            if ($profile['password'] == $oldpassword) {
+                if ($password == $confirmpassword) {
+                    $update = $this->CommonModal->updateRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'), array('password' => $password));
+                    if ($update) {
+                        $this->session->set_flashdata('cmsg', 'Password Changed Successfully');
+                        $this->session->set_flashdata('cmsg_class', 'alert-success');
+                    } else {
+                        $this->session->set_flashdata('cmsg', 'Password not changed , try again later');
+                        $this->session->set_flashdata('cmsg_class', 'alert-danger');
+                    }
+                } else {
+                    $this->session->set_flashdata('cmsg', 'Password and confirm password doesnt matched.');
+                    $this->session->set_flashdata('cmsg_class', 'alert-danger');
+                }
+            } else {
+                $this->session->set_flashdata('cmsg', 'Old password doesnt matched');
+                $this->session->set_flashdata('cmsg_class', 'alert-danger');
+            }
+            redirect(base_url('changePassword'));
+        } else {
+            $data['title'] = "Change Passowrd | SaharDirectory - Get a Personal Visiting Card";
+            $data['login_user'] = $this->session->userdata();
+            $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+            $this->load->view('change_password', $data);
+        }
+    }
+
+    public function enquiry()
+    {
+        if (!$this->session->has_userdata('login_user_id')) {
+            redirect(base_url('login'));
+        }
+
+        $BdID = $this->input->get('BdID');
+
+        if ($BdID != '') {
+            $delete = $this->CommonModal->deleteRowById('inquiry', array('id' => $BdID));
+            if ($delete) {
+                $this->session->set_flashdata('msg', 'Enquiry Delete Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Somethig Went Wrong try again later');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
+            }
+            redirect(base_url('enquiry'));
+            exit;
+        }
+        $data['title'] = "Enquiry | SaharDirectory - Get a Personal Visiting Card";
+        $data['login_user'] = $this->session->userdata();
+        $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+
+        $data['enquiry'] = $this->CommonModal->getRowByIdInOrder('inquiry', array('company_id' => sessionId('login_user_id')), 'id', 'DESC');
+
+
+        $this->load->view('enquiry', $data);
+    }
+
+
+
+    public function reviews()
+    {
+        if (!$this->session->has_userdata('login_user_id')) {
+            redirect(base_url('login'));
+        }
+
+        $BdID = $this->input->get('BdID');
+
+        if ($BdID != '') {
+            $delete = $this->CommonModal->deleteRowById('feedback', array('id' => $BdID));
+            if ($delete) {
+                $this->session->set_flashdata('msg', 'Reviews Delete Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Somethig Went Wrong try again later');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
+            }
+            redirect(base_url('reviews'));
+            exit;
+        }
+        $data['title'] = "Reviews | SaharDirectory - Get a Personal Visiting Card";
+        $data['login_user'] = $this->session->userdata();
+        $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+
+        $data['reviews'] = $this->CommonModal->getRowByIdInOrder('feedback', array('company_id' => sessionId('login_user_id')), 'id', 'DESC');
+
+
+        $this->load->view('reviews', $data);
+    }
+
+
+
+
 
     public function logout()
     {

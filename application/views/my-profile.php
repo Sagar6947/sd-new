@@ -427,30 +427,6 @@
 	<?php include 'includes/footer-bottom.php' ?>
 
 </div>
-<!-- All Jquery -->
-
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/popper.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/slick.js"></script>
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script src="assets/js/dropzone.js"></script>
-<script src="assets/js/counterup.js"></script>
-<script src="assets/js/lightbox.js"></script>
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/daterangepicker.js"></script>
-<script src="assets/js/lightbox.js"></script>
-<script src="assets/js/jQuery.style.switcher.js"></script>
-<script src="assets/js/custom.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- Date Booking Script -->
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/daterangepicker.js"></script>
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
 
 <script>
 	$(document).on('change', '#state', function() {
