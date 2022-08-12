@@ -1,6 +1,6 @@
 <?php include 'includes/header-link.php'; ?>
 <style>
-    input[type="checkbox"][id^="myCheckbox"] {
+    input[type="radio"][id^="myCheckbox"] {
         display: none;
     }
 
@@ -130,23 +130,23 @@
                                     <div class="dashboard-list-wraps-body py-3 px-3">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                                <div class="form-group">
+                                                <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 1</span>
-                                                    <input type="checkbox" id="myCheckbox1" />
+                                                    <input type="radio" name="vcard" value="1" id="myCheckbox1" />
                                                     <label for="myCheckbox1" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-1.jpg" /></label>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                                <div class="form-group">
+                                                <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 2</span>
-                                                    <input type="checkbox" id="myCheckbox2" />
+                                                    <input type="radio" name="vcard" value="2" id="myCheckbox2" />
                                                     <label for="myCheckbox2" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-2.jpg" /></label>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                                <div class="form-group">
+                                                <div class="form-group d-flex align-items-center flex-column">
                                                     <span class="mb-1">Style 3</span>
-                                                    <input type="checkbox" id="myCheckbox3" />
+                                                    <input type="radio" name="vcard" value="3" id="myCheckbox3" />
                                                     <label for="myCheckbox3" class="theme-label fa fa-check"></i> <img src="<?= base_url() ?>assets/images/vcard/style-3.jpg" /></label>
                                                 </div>
                                             </div>
