@@ -7266,9 +7266,17 @@ div#myTabContent {
 }
 
 .goodup-dashboard-grouping-list.with-icons ul li {
-	padding-left: 87px;
+	/* padding-left: 87px; */
 	font-size: 14px;
 }
+
+.product-img
+{
+	border-radius: 50%;
+    height: 50px;
+	width: 50px;
+}
+
 
 .goodup-dashboard-grouping-list ul li i.dsd-icon-uiyo {
 	height: 38px;
@@ -7304,12 +7312,29 @@ a.close-list-item {
 .goodup-dashboard-grouping-list .button.to-right {
 	position: absolute;
 	right: 30px;
-	top: 50%;
+	/* top: 50%; */
 	transform: translate3d(0, -49%, 0);
 	-moz-transform: translate3d(0, -50%, 0);
 	opacity: 0;
 	transition: .4s;
 }
+
+@media (max-width : 786px)
+{
+	.buttons-to-right,
+.goodup-dashboard-grouping-list .button.to-right {
+	position: absolute;
+	right: 30px;
+	bottom: 0 !important;
+	transform: translate3d(0, -49%, 0);
+	-moz-transform: translate3d(0, -50%, 0);
+	opacity: 0;
+	transition: .4s;
+}
+}
+
+
+
 
 .goodup-dashboard-grouping-list .button {
 	padding: 8px 15px;
@@ -7320,8 +7345,8 @@ a.close-list-item {
 	margin: 0;
 }
 
-.goodup-dashboard-grouping-list li:hover .buttons-to-right,
-.goodup-dashboard-grouping-list li:hover .button.to-right {
+.goodup-dashboard-grouping-list li .buttons-to-right,
+.goodup-dashboard-grouping-list li .button.to-right {
 	opacity: 1;
 }
 

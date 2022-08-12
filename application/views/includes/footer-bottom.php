@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-12 col-md-12 text-center align-items-center">
-					<p class="mb-0">© <?php echo date("Y"); ?> SaharDirectory. Designd By <a href="http://webangeltech.com/" target="_blank" style="color: #20aaff;"> <img src="assets/img/webangeltech.png" width="20px" alt=""> Webangeltech.</a></p>
+					<p class="mb-0">© <?php echo date("Y"); ?> Sahar Directory. <a href="http://webangeltech.com/" target="_blank" style="color: #20aaff;"></a></p>
 				</div>
 			</div>
 		</div>
