@@ -31,7 +31,7 @@
 							<form class="submit-form" method="POST">
 								<div class="form-group">
 									<label class="mb-1">Number</label>
-									<input type="number" class="form-control rounded" name="mobile" maxlength="11">
+									<input type="tel" class="form-control rounded" name="mobile" maxlength="10">
 								</div>
 
 								<div class="form-group password">

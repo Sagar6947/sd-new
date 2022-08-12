@@ -41,10 +41,16 @@
 					<div class="footer_widget">
 						<h4 class="widget_title">Important Links</h4>
 						<ul class="footer-menu">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Blogs</a></li>
-							<li><a href="#">Prices</a></li>
-							<li><a href="#">Add Listing</a></li>
+							<li><a href="<?= base_url('home') ?>">Home</a></li>
+							<li><a href="<?= base_url('') ?>">Blogs</a></li>
+							<?php
+							if ($this->session->has_userdata('login_user_id')) {
+							?>
+								<li><a href="<?= base_url('dashboard') ?>">Dashboard</a>
+								</li>
+							<?php
+							}
+							?>
 						</ul>
 					</div>
 				</div>

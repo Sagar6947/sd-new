@@ -32,7 +32,7 @@
                 <div class="nav-head d-flex justify-content-between align-items-center border-top"><span>Vcard/Website</span>
                 </div>
                 <ul data-submenu-title="Vcard/Website">
-                    <li><a href=""><i class="lni lni-postcard me-2"></i>Vcard Theme</a></li>
+                    <li><a href="<?= base_url('choose-vcard') ?>"><i class="lni lni-postcard me-2"></i>Vcard Theme</a></li>
                     <li><a href=""><i class="lni lni-circle-plus me-2"></i>Add Section </a></li>
                     <li><a href=""><i class="lni lni-money-protection me-2"></i>Add Payment Details </a></li>
                 </ul>

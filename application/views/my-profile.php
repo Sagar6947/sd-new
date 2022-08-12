@@ -56,49 +56,49 @@
 											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Company Name</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your company name" value="<?= $datarow[0]['company_name'] ?>" name="company_name" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your company name" value="<?= (($tag == 'edit') ? $datarow['0']['company_name'] : '') ?>" name="company_name" required />
 												</div>
 											</div>
 											<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Company Tagline</label>
-													<input type="text" class="form-control rounded" placeholder="Enter Your company tagline " name="company_tagline" value="<?= $datarow[0]['company_tagline'] ?>" required />
+													<input type="text" class="form-control rounded" placeholder="Enter Your company tagline " name="company_tagline" value="<?= (($tag == 'edit') ? $datarow['0']['company_tagline'] : '') ?>" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Your Name</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your name " name="company_person" value="<?= sessionId('login_user_name'); ?>" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your name " name="company_person" value="<?= (($tag == 'new') ? sessionId('login_user_name') : $datarow['0']['company_person']) ?>" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Your Designation</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your destignation" name="company_designation" value="<?= $datarow[0]['company_designation'] ?>" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your destignation" name="company_designation" value="<?= (($tag == 'edit') ? $datarow['0']['company_designation'] : '') ?>" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Mobile</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your number" name="company_contact" maxlength="10" required value="<?= sessionId('login_user_contact'); ?>" />
+													<input type="text" class="form-control rounded" placeholder="Enter your number" name="company_contact" maxlength="10" required value="<?= (($tag == 'new') ? sessionId('login_user_contact') : $datarow['0']['company_contact']) ?>" />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Email</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your email" name="company_email" value="<?= sessionId('login_user_emailid'); ?>" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your email" name="company_email" value="<?= (($tag == 'new') ? sessionId('login_user_emailid') : $datarow['0']['company_contact']) ?>" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Whatsapp</label>
-													<input type="text" class="form-control rounded" placeholder="Enter your whatsapp number" name="company_whatsapp" value="<?= $datarow[0]['company_whatsapp'] ?>" maxlength="10" required />
+													<input type="text" class="form-control rounded" placeholder="Enter your whatsapp number" name="company_whatsapp" value="<?= (($tag == 'edit') ? $datarow['0']['company_whatsapp'] : '') ?>" maxlength="10" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Website (Optional)</label>
-													<input type="text" class="form-control rounded" placeholder="Your website link" value="<?= $datarow[0]['company_website_url'] ?>" name="company_website_url" />
+													<input type="text" class="form-control rounded" placeholder="Your website link" value="<?= (($tag == 'edit') ? $datarow['0']['company_website_url'] : '') ?>" name="company_website_url" />
 												</div>
 											</div>
 										</div>
@@ -184,15 +184,29 @@
 											<div class="col-lg-6 col-md-6">
 												<div class="form-group">
 													<label for="formFileLg" class="form-label">Upload Company Logo</label>
-													<input class="form-control rounded" type="file" name="company_logo" value="<?= $datarow[0]['company_logo'] ?>" required>
-													<img src="<?= base_url() ?>uploads/company/<?= $datarow[0]['company_logo'] ?>" class="logo-preview" alt="company-logo">
+													<input class="form-control rounded" type="file" name="company_logo" value="<?= (($tag == 'edit') ? $datarow['0']['company_logo'] : '') ?>" required>
+
+													<?php
+													if ($tag == 'edit') {
+													?>
+														<img src="<?= base_url() ?>uploads/company/<?= $datarow[0]['company_logo'] ?>" class="logo-preview" alt="company-logo">
+													<?php
+													}
+													?>
+
 												</div>
 											</div>
 											<div class="col-lg-6 col-md-6">
 												<div class="form-group">
 													<label for="formFileLg" class="form-label">Upload Company Banner</label>
-													<input class="form-control rounded" type="file" name="company_banner" value="<?= $datarow[0]['company_logo'] ?>" required>
-													<img src="<?= base_url() ?>uploads/company/<?= $datarow[0]['company_banner'] ?>" class="logo-preview" alt="company-logo">
+													<input class="form-control rounded" type="file" name="company_banner" value="<?= (($tag == 'edit') ? $datarow['0']['company_banner'] : '') ?>" required>
+													<?php
+													if ($tag == 'edit') {
+													?>
+														<img src="<?= base_url() ?>uploads/company/<?= $datarow[0]['company_banner'] ?>" class="logo-preview" alt="company-logo">
+													<?php
+													}
+													?>
 												</div>
 											</div>
 
@@ -259,13 +273,13 @@
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Address</label>
-													<input type="text" class="form-control rounded" placeholder="Enter Your address here" value="<?= $datarow[0]['company_address'] ?>" name="company_address" required />
+													<input type="text" class="form-control rounded" placeholder="Enter Your address here" value="<?= (($tag == 'edit') ? $datarow['0']['company_address'] : '') ?>" name="company_address" required />
 												</div>
 											</div>
 											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 												<div class="form-group">
 													<label class="mb-1">Pin Code</label>
-													<input type="text" class="form-control rounded" placeholder="Pin code" value="<?= $datarow[0]['pin_code'] ?>" name="pin_code" required />
+													<input type="text" class="form-control rounded" placeholder="Pin code" value="<?= (($tag == 'edit') ? $datarow['0']['pin_code'] : '') ?>" name="pin_code" required />
 												</div>
 											</div>
 

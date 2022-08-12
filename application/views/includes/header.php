@@ -8,7 +8,7 @@
                 <div class="mobile_nav">
                     <ul>
                         <li>
-                            <a href="login.php" class="crs_yuo12 w-auto text-white theme-bg">
+                            <a href="<?= base_url('login') ?>" class="crs_yuo12 w-auto text-white theme-bg">
                                 <span class="embos_45"><i class="fas fa-user me-2"></i>Login</span>
                             </a>
                         </li>

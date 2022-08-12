@@ -9,7 +9,7 @@
 				<div class="mobile_nav">
 					<ul>
 						<li>
-							<a href="" class="crs_yuo12 w-auto text-dark gray">
+							<a href="<?= base_url() ?>logout" class="crs_yuo12 w-auto text-dark gray">
 								<span class="embos_45"><i class="lni lni-power-switch mr-1 mr-1"></i>Logout</span>
 							</a>
 						</li>

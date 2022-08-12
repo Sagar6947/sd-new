@@ -11,6 +11,7 @@ $route['search'] = "Home/search";
 $route['login'] = "Home/login";
 $route['signup'] = "Home/register";
 $route['my-profile'] = "Home/my_profile";
+$route['choose-vcard'] = "Home/choose_vcard";
 $route['dashboard'] = "Home/dashboard";
 $route['logout'] = 'Home/logout';
 $route['search_contact'] = "Home/searchcontact";

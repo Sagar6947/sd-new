@@ -76,7 +76,7 @@
 						<div class="dash-card-header">
 							<h4 class="mb-0">Enquiry</h4>
 						</div>
-						<div class="dash-card-body" style="padding: 10px;">
+						<div class="dash-card-body overflow-xs" style="padding: 10px;">
 							<table class="table table-striped">
 								<thead>
 									<tr>

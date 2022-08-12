@@ -163,6 +163,7 @@ class Home extends CI_Controller
                 $data['title'] = "Complete Your Profile | SaharDirectory - Get a Personal Visiting Card";
                 $data['login_user'] = $this->session->userdata();
                 $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+                $data['tag'] = "new";
                 $data['category'] = $this->CommonModal->getAllRows('company_category');
                 $data['state_list'] = $this->CommonModal->getAllRows('tbl_state');
                 $this->load->view('my-profile', $data);
@@ -193,6 +194,7 @@ class Home extends CI_Controller
                 $data['title'] = "My Profile | SaharDirectory - Get a Personal Visiting Card";
                 $data['login_user'] = $this->session->userdata();
                 $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
+                $data['tag'] = "edit";
                 $data['datarow'] = $this->CommonModal->getRowByMoreId('company', array('rgid' => $uid));
                 $data['category'] = $this->CommonModal->getAllRows('company_category');
                 $data['state_list'] = $this->CommonModal->getAllRows('tbl_state');
@@ -236,6 +238,18 @@ class Home extends CI_Controller
         $data['login_user'] = $this->session->userdata();
         $data['profiledata'] = $this->CommonModal->getRowById('tbl_registration', 'rgid', $this->session->userdata('login_user_id'));
         $this->load->view('dashboard', $data);
+    }
+    public function choose_vcard()
+    {
+        if (!$this->session->has_userdata('login_user_id')) {
+            redirect(base_url('login'));
+        }
+        if (!sessionId('sahar')) {
+            redirect(base_url('my-profile'));
+        }
+
+        $data['title'] = "Select Vcard | SaharDirectory - Get a Personal Visiting Card";
+        $this->load->view('choose-vcard', $data);
     }
 
     public function logout()
